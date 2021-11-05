@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import path from "path";
 import MainController from "./controllers/MainController.js";
+
 const app = express();
 const __dirname = path.resolve();
 
