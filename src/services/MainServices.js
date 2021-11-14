@@ -1,5 +1,3 @@
-import getConnection from "../config/db.js";
-
 export const Test = async (req, res, next) => {
   try {
     //console.log(getConnection);
