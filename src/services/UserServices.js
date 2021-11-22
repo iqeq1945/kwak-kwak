@@ -8,6 +8,7 @@ export const SignUp = async (req, res, next) => {
     const exUserNickname = await UserRepository.findByNickname(
       req.body.nickname
     );
+    console.log(exUserNickname);
     if (exUserNickname) {
       return res
         .status(403)
@@ -30,7 +31,7 @@ export const SignUp = async (req, res, next) => {
       return res.status(500).send(resFormat.fail(500, "회원가입 실패"));
     return res
       .status(200)
-      .send(resFormat.successData(200, "회원가입 및 로그인 성공", user));
+      .send(resFormat.success(200, "회원가입 및 로그인 성공"));
   } catch (err) {
     console.error(err);
     next(err);

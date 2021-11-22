@@ -10,9 +10,11 @@ router.post("/", UserServices.SignUp, function (req, res) {
   res.json({ ok: true });
 });
 router.post("/login", UserServices.LogIn, function (req, res) {
+  console.log(req.user);
   res.json({ ok: true });
 });
 router.get("/logout", UserServices.LogOut, function (req, res) {
   res.json({ ok: true });
 });
+
 export default router;
