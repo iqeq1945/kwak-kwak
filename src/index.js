@@ -9,6 +9,7 @@ import passport from "passport";
 import passportConfig from "./configs/passport/index.js";
 import MainController from "./controllers/MainController.js";
 import UserController from "./controllers/UserController.js";
+import ProfileController from "./controllers/ProfileController.js";
 const app = express();
 const __dirname = path.resolve();
 
@@ -41,6 +42,7 @@ app.use(passport.session());
 // router
 app.use("/", MainController);
 app.use("/user", UserController);
+app.use("/profile", ProfileController);
 
 const port = 3000;
 app.listen(port, function () {
