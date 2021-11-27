@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <div>
+      <P>로그인</P>
+      <form action="/user/login" method="post">
+        email : <input type="text" name="email" /><br />
+        password : <input type="password" name="password" /><br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>

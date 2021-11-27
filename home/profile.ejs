@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <div>
+      <h1>Profile</h1>
+      <P>제 웹사이트를 방문해 주셔서 감사합니다!</P>
+    </div>
+    <div>
+      <form action="/profile" method="post">
+        introduce : <input type="text" name="introduce" /><br />
+        blogUrl : <input type="text" name="blogUrl" /><br />
+        githubUrl : <input type="text" name="githubUrl" /><br />
+       <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>
