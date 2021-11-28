@@ -96,13 +96,19 @@ export const GetPostInfo = async (req, res, next) => {
 
 export const OnLike = async (req, res, next) => {
   try {
-    const check = await LikeRepository.findLike(req.user.id, req.body.postId);
+    const check = await LikeRepository.findLike(
+      req.user.id,
+      parseInt(req.body.postId, 10)
+    );
     if (check) {
       return res
         .status(401)
         .send(resFormat.fail(401, "이미 좋아요한 글입니다."));
     }
-    const response = await LikeRepository.Like(req.user.id, req.body.postId);
+    const response = await LikeRepository.Like(
+      req.user.id,
+      parseInt(req.body.postId, 10)
+    );
     if (!response) {
       return res
         .status(500)
@@ -117,13 +123,19 @@ export const OnLike = async (req, res, next) => {
 
 export const OnUnLike = async (req, res, next) => {
   try {
-    const check = await LikeRepository.findLike(req.user.id, req.body.postId);
+    const check = await LikeRepository.findLike(
+      req.user.id,
+      parseInt(req.body.postId, 10)
+    );
     if (!check) {
       return res
         .status(401)
         .send(resFormat.fail(401, "좋아요를 한 글이 아닙니다."));
     }
-    const response = await LikeRepository.UnLike(req.user.id, req.body.postId);
+    const response = await LikeRepository.UnLike(
+      req.user.id,
+      parseInt(req.body.postId, 10)
+    );
     if (!response) {
       return res
         .status(500)
@@ -138,7 +150,10 @@ export const OnUnLike = async (req, res, next) => {
 
 export const OnScrap = async (req, res, next) => {
   try {
-    const check = await ScrapRepository.findScrap(req.user.id, req.body.postId);
+    const check = await ScrapRepository.findScrap(
+      req.user.id,
+      parseInt(req.body.postId, 10)
+    );
     if (check) {
       return res
         .status(401)
@@ -146,7 +161,7 @@ export const OnScrap = async (req, res, next) => {
     }
     const response = await ScrapRepository.OnScrap(
       req.user.id,
-      req.body.postId
+      parseInt(req.body.postId, 10)
     );
     if (!response) {
       return res
@@ -162,7 +177,10 @@ export const OnScrap = async (req, res, next) => {
 
 export const OnUnScrap = async (req, res, next) => {
   try {
-    const check = await ScrapRepository.findScrap(req.user.id, req.body.postId);
+    const check = await ScrapRepository.findScrap(
+      req.user.id,
+      parseInt(req.body.postId, 10)
+    );
     if (!check) {
       return res
         .status(401)
@@ -170,7 +188,7 @@ export const OnUnScrap = async (req, res, next) => {
     }
     const response = await ScrapRepository.OnUnScrap(
       req.user.id,
-      req.body.postId
+      parseInt(req.body.postId, 10)
     );
     if (!response) {
       return res

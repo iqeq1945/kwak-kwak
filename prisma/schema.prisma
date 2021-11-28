@@ -77,8 +77,6 @@ model Like {
   userId    Int
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
-  createdAt DateTime
-  updatedAt DateTime?
 
   @@unique([userId, postId], name: "LikeKey")
   @@map("likes")
@@ -89,8 +87,6 @@ model Scrap {
   userId    Int
   post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId Int
-  createdAt DateTime
-  updatedAt DateTime?
 
   @@unique([userId, postId], name: "ScrapKey")
   @@map("scraps")
