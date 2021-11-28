@@ -10,6 +10,8 @@ import passportConfig from "./configs/passport/index.js";
 import MainController from "./controllers/MainController.js";
 import UserController from "./controllers/UserController.js";
 import ProfileController from "./controllers/ProfileController.js";
+import PostController from "./controllers/PostController.js";
+import CommentController from "./controllers/CommentController.js";
 const app = express();
 const __dirname = path.resolve();
 
@@ -43,6 +45,8 @@ app.use(passport.session());
 app.use("/", MainController);
 app.use("/user", UserController);
 app.use("/profile", ProfileController);
+app.use("/post", PostController);
+app.use("/comment", CommentController);
 
 const port = 3000;
 app.listen(port, function () {
