@@ -14,5 +14,16 @@ router.get("/login", function (req, res) {
   console.log(req.user);
   res.render("home/login");
 });
+router.get("/write", function (req, res) {
+  res.render("home/write");
+});
+
+router.get("/test", function (req, res) {
+  res.render("home/test");
+});
+
+router.post("/test", function (req, res) {
+  console.log(req.body);
+});
 
 export default router;
