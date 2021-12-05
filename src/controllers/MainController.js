@@ -17,11 +17,9 @@ router.get("/login", function (req, res) {
 router.get("/write", function (req, res) {
   res.render("home/write");
 });
-
-router.get("/test", function (req, res) {
-  res.render("home/test");
+router.get("/mypage", function (req, res) {
+  res.render("home/mypage");
 });
-
 router.post("/test", function (req, res) {
   console.log(req.body);
 });
