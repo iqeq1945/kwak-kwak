@@ -4,13 +4,164 @@
     <%- include('../partials/head') %>
   </head>
   <body>
-    <div>
-      <P>로그인</P>
-      <form action="/user/login" method="post">
-        email : <input type="text" name="email" /><br />
-        password : <input type="password" name="password" /><br />
-        <input type="submit" value="Submit" />
-      </form>
+    <%- include('../partials/nav') %>
+    <!-- Close Header -->
+    <section class="container py-5">
+      <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+          <h1 class="h1">잔디심는 곽곽이</h1>
+          <p>
+            서울과학기술대학교 개발자들을 위한 커뮤니티입니다.
+          </p>
+        </div>
+      </div>
+    </section>
+  
+  
+    <!-- Start Banner Hero -->
+    <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
+        <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" style="height : 600px">
+        <div class="carousel-item active">
+          <div class="container">
+            <div class="row p-5">
+              <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                <a href="https://woowacourse.github.io/" target="_blank">
+                  <img class="img-fluid" src="/img/banner_img_01.jpg" th:src="@{/img/banner_img_01.jpg}" alt=""
+                    style="position: absolute; top:0; left: 0; height:100%; width:100%; object-fit: contain; margin-top:30px">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="container">
+            <div class="row p-5">
+              <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                <a href="https://www.ssafy.com/ksp/jsp/swp/swpMain.jsp" target="_blank">
+                  <img class="img-fluid" src="/img/ssafy.png" th:src="@{/img/ssafy.png}" alt=""
+                    style="position: absolute; top:0; left: 0; height:100%; width:100%; object-fit: contain; margin-top:30px">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="container">
+            <div class="row p-5">
+              <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                <a href="https://www.wanted.co.kr/events/audition2021_register" target="_blank">
+                  <img class="img-fluid" src="/img/hack.jpg" th:src="@{/img/hack.jpg}" alt=""
+                    style="position: absolute; top:0; left: 0; height:100%; width:100%; object-fit: contain; margin-top:30px">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel"
+        role="button" data-bs-slide="prev">
+        <i class="fas fa-chevron-left"></i>
+      </a>
+      <a class="carousel-control-next text-decoration-none w-auto pe-3" href="#template-mo-zay-hero-carousel"
+        role="button" data-bs-slide="next">
+        <i class="fas fa-chevron-right"></i>
+      </a>
     </div>
+    <!-- End Banner Hero -->
+  
+  
+    <!-- Start Footer -->
+    <footer class="bg-dark" id="tempaltemo_footer">
+      <div class="container">
+        <div class="row">
+  
+          <div class="col-md-4 pt-5">
+            <h2 class="h2 text-success border-bottom pb-3 border-light logo">곽곽</h2>
+            <ul class="list-unstyled text-light footer-link-list">
+              <li>
+                <i class="fas fa-map-marker-alt fa-fw"></i>
+                서울과학기술대학교
+              </li>
+              <li>
+                <i class="fa fa-phone fa-fw"></i>
+                <a class="text-decoration-none" href="tel:010-5635-7519">010-5635-7519</a>
+              </li>
+              <li>
+                <i class="fa fa-envelope fa-fw"></i>
+                <a class="text-decoration-none" href="mailto:info@company.com">iqeq1945@gmail.com</a>
+              </li>
+            </ul>
+          </div>
+  
+          <div class="col-md-4 pt-5">
+            <h2 class="h2 text-light border-bottom pb-3 border-light">사이트</h2>
+            <ul class="list-unstyled text-light footer-link-list">
+              <li><a class="text-decoration-none" href="ranking.html" th:href="@{/ranking}">곽곽랭킹</a></li>
+              <li><a class="text-decoration-none" href="community.html" th:href="@{/community}">커뮤니티</a></li>
+              <li><a class="text-decoration-none" href="seoultech.html" th:href="@{/seoultech}">곽곽 RSS</a></li>
+              <li><a class="text-decoration-none" href="mypage.html" th:href="@{/mypage}">마이페이지</a></li>
+            </ul>
+          </div>
+  
+  
+        </div>
+  
+        <div class="row text-light mb-4">
+          <div class="col-12 mb-3">
+            <div class="w-100 my-3 border-top border-light"></div>
+          </div>
+          <div class="col-auto me-auto">
+            <ul class="list-inline text-left footer-icons">
+              <li class="list-inline-item border border-light rounded-circle text-center">
+                <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i
+                    class="fab fa-facebook-f fa-lg fa-fw"></i></a>
+              </li>
+              <li class="list-inline-item border border-light rounded-circle text-center">
+                <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i
+                    class="fab fa-instagram fa-lg fa-fw"></i></a>
+              </li>
+              <li class="list-inline-item border border-light rounded-circle text-center">
+                <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i
+                    class="fab fa-twitter fa-lg fa-fw"></i></a>
+              </li>
+              <li class="list-inline-item border border-light rounded-circle text-center">
+                <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i
+                    class="fab fa-linkedin fa-lg fa-fw"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  
+      <div class="w-100 bg-black py-3">
+        <div class="container">
+          <div class="row pt-2">
+            <div class="col-12">
+              <p class="text-left text-light">
+                Copyright &copy; 2021 곽곽
+                | Designed by <a rel="sponsored" href="https://github.com/Kwak-Kwak" target="_blank">곽곽</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </footer>
+    <!-- End Footer -->
+  
+    <!-- Start Script -->
+  
+    <script src="/js/jquery-1.11.0.min.js" th:src="@{/js/jquery-1.11.0.min.js}"></script>
+    <script src="/js/jquery-migrate-1.2.1.min.js" th:src="@{/js/jquery-migrate-1.2.1.min.js}"></script>
+    <script src="/js/bootstrap.bundle.min.js" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script src="/js/templatemo.js" th:src="@{/js/templatemo.js}"></script>
+    <script src="/js/custom.js" th:src="@{/js/custom.js}"></script>
+    <!-- End Script -->
   </body>
-</html>
+  
+  </html>
