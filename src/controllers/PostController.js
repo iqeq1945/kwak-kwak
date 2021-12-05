@@ -3,9 +3,7 @@ import * as PostServices from "../services/PostServices.js";
 
 const router = express.Router();
 
-router.post("/", PostServices.CreatePost, function (req, res) {
-  console.log(req.body);
-});
+router.post("/", PostServices.CreatePost);
 
 router.patch("/:postId", PostServices.UpdatePost);
 

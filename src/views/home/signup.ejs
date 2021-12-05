@@ -1,20 +1,42 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <%- include('../partials/head') %>
-  </head>
-  <body>
-    <div>
-      <h1>SignUp</h1>
-      <P>제 웹사이트를 방문해 주셔서 감사합니다!</P>
+<html lang="ko">
+
+<head>
+  <%- include('../partials/head') %>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://kit.fontawesome.com/51db22a717.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="page-container">
+    <div class="login-form-container shadow">
+      <div class="login-form-right-side">
+        <div class="top-logo-wrap">
+
+        </div>
+        <h1>잔디 심는 <br>곽곽이</h1>
+        <p>잔디 심는 곽곽이에서<br>
+          주니어 개발자들 간의 소통을 즐기세요!</p>
+      </div>
+      <div class="login-form-left-side">
+        <form action="/user/signup" method="post" class="login-input-container">
+          <div class="login-input-wrap input-id">
+                       <input placeholder="Email" name="email" type="text">
+          </div>
+          <div class="login-input-wrap input-id">
+                        <input placeholder="nickname" name="nickname" type="text">
+          </div>
+          <div class="login-input-wrap input-password">
+                        <input placeholder="Password" name="password" type="password">
+          </div>
+          <div class="login-btn-wrap">
+            <button type="submit" class="login-btn">계정 등록</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div>
-      <form action="/user/" method="post">
-        email : <input type="text" name="email" /><br />
-        password : <input type="password" name="password" /><br />
-        nickname : <input type="text" name="nickname" />
-        <input type="submit" value="Submit" />
-      </form>
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>

@@ -11,11 +11,12 @@ export const CreatePost = async (req, res, next) => {
     if (!response) {
       return res
         .status(500)
-        .send(resFormat.fail(500, "알수 없는 에러로 포스트 작성하기 실패"));
+        .render(
+          "home/write",
+          resFormat.fail(500, "알수 없는 에러로 포스트 작성하기 실패")
+        );
     }
-    return res
-      .status(200)
-      .send(resFormat.successData(200, "포스트 작성 성공", response));
+    return res.status(200).redirect("/community");
   } catch (err) {
     console.error(err);
     next(err);
@@ -40,11 +41,12 @@ export const UpdatePost = async (req, res, next) => {
     if (!response) {
       return res
         .status(500)
-        .send(resFormat.fail(500, "알수 없는 에러로 수정 실패"));
+        .render(
+          "home/write",
+          resFormat.fail(500, "알수 없는 에러로 포스트 수정하기 실패")
+        );
     }
-    return res
-      .status(200)
-      .send(resFormat.successData(200, "포스트 수정 성공", response));
+    return res.status(200).redirect("/community");
   } catch (err) {
     console.error(err);
     next(err);
@@ -85,9 +87,7 @@ export const GetPostInfo = async (req, res, next) => {
         .status(500)
         .send(resFormat.fail(500, "알수 없는 에러로 포스트 정보 찾기 실패"));
     }
-    return res
-      .status(200)
-      .send(resFormat.successData(200, "포스트 정보 얻기 성공", data));
+    return res.status(200).render("home/view", { post: data });
   } catch (err) {
     console.error(err);
     next(err);
@@ -202,6 +202,22 @@ export const OnUnScrap = async (req, res, next) => {
   }
 };
 
+export const GetPostList = async (req, res, next) => {
+  try {
+    const keyword = req.query.keyword ? req.query.keyword : undefined;
+    const category = req.query.category ? req.query.category : undefined;
+    const data = await PostRepository.GetPostList(keyword, category);
+    if (!data) {
+      return res
+        .status(500)
+        .send(resFormat.fail(500, "알수 없는 에러로 가져오기 실패"));
+    }
+    return res.status(200).render("home/community", data);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
 export const CreateOption = (id, bodydata) => {
   // DB에 맞추어 Option 설정
   const Option = {

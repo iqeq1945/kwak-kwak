@@ -1,5 +1,5 @@
 import express from "express";
-import * as MainServices from "../services/MainServices.js";
+import * as PostServices from "../services/PostServices.js";
 const router = express.Router();
 
 router.get("/", function (req, res) {
@@ -17,9 +17,8 @@ router.get("/login", function (req, res) {
 router.get("/write", function (req, res) {
   res.render("home/write");
 });
-router.get("/mypage", function (req, res) {
-  res.render("home/mypage");
-});
+router.get("/community", PostServices.GetPostList);
+
 router.post("/test", function (req, res) {
   console.log(req.body);
 });
