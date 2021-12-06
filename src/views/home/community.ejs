@@ -35,7 +35,9 @@
                             <a class="dropdown-item" href="/community?category=Study">스터디</a>
                         </div>
                     </div>
+                    <% if(isAuthenticated) {%>
                     <button class="btn btn-primary"><a href="/write" class="m-0 p-0 text-white text-decoration-none">글쓰기</a></button>
+                    <% } %>
                 </div>
             </div>
         </div>
@@ -50,9 +52,8 @@
                     <h3 class="card-text pt-3" style="text-overflow:ellipsis; overflow: hidden; white-space:nowrap">
                         <%= element.content %>
                     </h3>
-                    <p class="text-sm pt-3"><span><%= element.createdAt %></span></p>
                     <ul class="list-unstyled d-flex mb-0">
-                        <li class="me-auto py-2"><%= element.author.nickname %></li>
+                        <li class="me-auto py-2">By <%= element.author.nickname %></li>
                         <li class="p-2">댓글(<span>
                                 <%= element.comment.length %>
                             </span>)</li>

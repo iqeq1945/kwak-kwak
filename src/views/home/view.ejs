@@ -11,9 +11,19 @@
 <section class="container py-5" >
     <div class="d-flex flex-column px-5 mx-5 my-5">
         <h2><%= post.title %></h2>
+        <% if (post.tag) {%>
+        <% let array=post.tag.split(','); %>
+            <div class="d-flex flex-row">
+            <% for(var i=0; i<array.length; i++) { %>
+                <div class="btn btn-primary py-1 mx-1 mb-3">
+                    <%= array[i] %>
+                </div>
+        <% } %>
+        </div>
+        <% } %>
         <div class="d-flex mt-3">
             <div class="py-2 me-auto">
-                <span><%= post.author.nickname %></span><span> · </span><span><%= post.createdAt %></span>
+                <span><%= post.author.nickname %></span><span> · </span><span><%= new Date(post.createdAt).toLocaleDateString() %></span>
             </div>
             <div class="py-2">
                 <% var chk = false; %> 
