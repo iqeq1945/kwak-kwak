@@ -16,10 +16,24 @@
                 <span><%= post.author.nickname %></span><span> · </span><span><%= post.createdAt %></span>
             </div>
             <div class="py-2">
-                <img id="unlike"  src="/img/unheart.png" style="width: 20px;" alt="unlike" onclick="Like();">
-                <img id="like"  src="/img/heart.png" style="width: 20px; display: none;" alt="like" onclick="unLike();">
-                <img id="unscrap" src="/img/unstar.png" class="ms-2" style="width: 20px;" alt="unscrap" onclick="Scrap();">
-                <img id="scrap" src="/img/star.png" class="ms-2" style="width: 20px;display: none;" alt="scrap" onclick="unScrap();">
+                <% var chk = false; %> 
+                <% post.like.forEach(function(element){ %>
+                <% if(isAuthenticated&&element.userId == currentUser.id){chk=true; return;} %>
+                <% }) %>
+                <% if(chk) { %>
+                        <img id="like" src="/img/heart.png" style="width: 20px;" alt="like">
+                <% } else {%>
+                    <a href="/post/like/<%= post.id %>"><img id="unlike" src="/img/unheart.png" style="width: 20px;" alt="unlike"></a>
+                <% } %> 
+                <% var flag = false; %>
+                <% post.scrap.forEach(function(element){ %>
+                <% if(isAuthenticated&&element.userId==currentUser.id){chk=true; return;} %>
+                <% }) %>
+                <% if(flag) { %>
+                    <img id="scrap" src="/img/star.png" class="ms-2" style="width: 20px;" alt="scrap" >
+                <% } else {%>
+                    <a href="/post/scrap/<%= post.id %>"><img id="unscrap" src="/img/unstar.png" class="ms-2" style="width: 20px;" alt="unscrap"></a>
+                <% } %>
             </div>
         </div>
         <br>
@@ -41,7 +55,9 @@
         </div>
         <% if(isAuthenticated&&post.authorId==currentUser.id) {%>
         <div class="d-flex flex-row justify-content-end">
-            <button onclick = "location.href = '/post/id'">하이</button><button>바이</button>
+            <form action="" ></form>
+            <button onclick = "location.href = '/post/update/<%= post.id%>'">수정</button>
+            <button onclick = "location.href = '/post/delete/<%= post.id%>'">삭제</button>
         </div>
         <% } %>
         <hr>
@@ -71,6 +87,9 @@
                 <p class="my-2 px-4" >
                     <%= element.content %>
                 </p>
+                <% if(element.author.id == currentUser.id) { %>
+                <button class="ms-auto"onclick="location.href = '/comment/delete/<%= element.id %>?postId=<%= post.id %>'">댓글 삭제</button>
+                <% } %>
                 <hr>
             </div>
             <% }) %>
@@ -93,6 +112,14 @@
         initialValue: content
     });
 
+    $('#like').click(function(){
+        $('#like').css('display','none');
+        $('#unlike').css('display','block');
+    })
+    $('#unlike').click(function () {
+            $('#unlike').css('display', 'none');
+            $('#like').css('display', 'block');
+        })
     const Like = () => {
         let unlike = document.getElementById("unlike");
         let like =document.getElementById("like");
@@ -118,7 +145,8 @@
         let scrap =document.getElementById("scrap");
         unscrap.style.display='inline';
         scrap.style.display='none';
-    }
+    
+}
 </script>
 <!-- End Script -->
 

@@ -67,7 +67,7 @@ export const DeleteComment = async (req, res, next) => {
         .status(500)
         .send(resFormat.fail(500, "알수 없는 에러로 삭제 실패"));
     }
-    return res.status(200).send(resFormat.success(200, "댓글 삭제 성공"));
+    return res.status(200).redirect("/post/" + req.query.postId);
   } catch (err) {
     console.error(err);
     next(err);

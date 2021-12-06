@@ -5,13 +5,13 @@ const router = express.Router();
 
 router.post("/", PostServices.CreatePost);
 
-router.patch("/:postId", PostServices.UpdatePost);
+router.put("/:postId", PostServices.UpdatePost);
 
 router.get("/:postId", PostServices.GetPostInfo);
 
-router.delete("/:postId", PostServices.DeletePost);
+router.get("/delete/:postId", PostServices.DeletePost);
+router.get("/update/:postId", PostServices.UpdatePostInfo);
+router.get("/like/:postId", PostServices.OnLike);
 
-router.post("/like", PostServices.OnLike);
-
-router.post("/unlike", PostServices.OnUnLike);
+router.get("/unlike/:postId", PostServices.OnUnLike);
 export default router;
