@@ -8,17 +8,22 @@ export const SignUp = async (req, res, next) => {
     const exUserNickname = await UserRepository.findByNickname(
       req.body.nickname
     );
-    console.log(exUserNickname);
     if (exUserNickname) {
       return res
         .status(403)
-        .send(resFormat.fail(403, "이미 가입된 닉네임입니다."));
+        .render(
+          "home/signup",
+          resFormat.fail(403, "이미 가입된 닉네임입니다.")
+        );
     }
     const exUserEmail = await UserRepository.findByEmail(req.body.email);
     if (exUserEmail) {
       return res
         .status(403)
-        .send(resFormat.fail(403, "이미 가입된 이메일입니다."));
+        .render(
+          "home/signup",
+          resFormat.fail(403, "이미 가입된 이메일입니다.")
+        );
     }
     const hashPassword = await bcrypt.hash(req.body.password, 12);
 
@@ -28,10 +33,10 @@ export const SignUp = async (req, res, next) => {
       hashPassword
     );
     if (!response)
-      return res.status(500).send(resFormat.fail(500, "회원가입 실패"));
-    return res
-      .status(200)
-      .send(resFormat.success(200, "회원가입 및 로그인 성공"));
+      return res
+        .status(500)
+        .redirect("home/signup", resFormat.fail(500, "회원가입 실패"));
+    return res.status(200).redirect("/");
   } catch (err) {
     console.error(err);
     next(err);
@@ -44,7 +49,9 @@ export const LogIn = (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      return res.status(401).send(resFormat.fail(401, info.message));
+      return res
+        .status(401)
+        .render("home/login", resFormat.fail(401, info.message));
     }
     req.login(user, (err) => {
       if (err) {
@@ -52,9 +59,7 @@ export const LogIn = (req, res, next) => {
         console.error(err);
         next(err);
       }
-      return res
-        .status(200)
-        .send(resFormat.successData(200, "로그인성공", user));
+      return res.status(200).redirect("/");
     });
   })(req, res, next);
 };
@@ -67,7 +72,7 @@ export const LogOut = (req, res, next) => {
       next(err);
     } else {
       res.clearCookie("connect.sid");
-      res.status(200).send(resFormat.success(200, "로그아웃 성공"));
+      return res.status(200).redirect("/");
     }
   });
 };
@@ -96,6 +101,20 @@ export const EmailCheck = async (req, res, next) => {
     return res
       .status(200)
       .send(resFormat.success(200, "사용가능한 이메일입니다."));
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
+
+export const GetUser = async (req, res, next) => {
+  try {
+    const user = await UserRepository.findById(parseInt(req.params.id, 10));
+    if (!user) {
+      next();
+    }
+    req.userData = user;
+    next();
   } catch (err) {
     console.error(err);
     next(err);

@@ -36,6 +36,26 @@ export const findById = async (id) => {
       where: {
         id: id,
       },
+      include: {
+        post: {
+          include: {
+            author: true,
+          },
+        },
+        like: {
+          include: {
+            user: true,
+            post: true,
+          },
+        },
+        scrap: {
+          include: {
+            user: true,
+            post: true,
+          },
+        },
+        profile: true,
+      },
     });
   } catch (err) {
     console.error(err);

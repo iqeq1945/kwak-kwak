@@ -11,11 +11,12 @@ export const CreatePost = async (req, res, next) => {
     if (!response) {
       return res
         .status(500)
-        .send(resFormat.fail(500, "알수 없는 에러로 포스트 작성하기 실패"));
+        .render(
+          "home/write",
+          resFormat.fail(500, "알수 없는 에러로 포스트 작성하기 실패")
+        );
     }
-    return res
-      .status(200)
-      .send(resFormat.successData(200, "포스트 작성 성공", response));
+    return res.status(200).redirect("/community");
   } catch (err) {
     console.error(err);
     next(err);
@@ -40,11 +41,12 @@ export const UpdatePost = async (req, res, next) => {
     if (!response) {
       return res
         .status(500)
-        .send(resFormat.fail(500, "알수 없는 에러로 수정 실패"));
+        .render(
+          "home/write",
+          resFormat.fail(500, "알수 없는 에러로 포스트 수정하기 실패")
+        );
     }
-    return res
-      .status(200)
-      .send(resFormat.successData(200, "포스트 수정 성공", response));
+    return res.status(200).redirect("/post/" + req.params.postId);
   } catch (err) {
     console.error(err);
     next(err);
@@ -70,13 +72,26 @@ export const DeletePost = async (req, res, next) => {
         .status(500)
         .send(resFormat.fail(500, "알수 없는 에러로 삭제 실패"));
     }
-    return res.status(200).send(resFormat.success(200, "포스트 삭제 성공"));
+    return res.status(200).redirect("/community");
   } catch (err) {
     console.error(err);
     next(err);
   }
 };
-
+export const UpdatePostInfo = async (req, res, next) => {
+  try {
+    const data = await PostRepository.findById(parseInt(req.params.postId, 10));
+    if (!data) {
+      return res
+        .status(500)
+        .send(resFormat.fail(500, "알수 없는 에러로 포스트 정보 찾기 실패"));
+    }
+    return res.status(200).render("home/rewrite", { post: data });
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
 export const GetPostInfo = async (req, res, next) => {
   try {
     const data = await PostRepository.findById(parseInt(req.params.postId, 10));
@@ -85,9 +100,7 @@ export const GetPostInfo = async (req, res, next) => {
         .status(500)
         .send(resFormat.fail(500, "알수 없는 에러로 포스트 정보 찾기 실패"));
     }
-    return res
-      .status(200)
-      .send(resFormat.successData(200, "포스트 정보 얻기 성공", data));
+    return res.status(200).render("home/view", { post: data });
   } catch (err) {
     console.error(err);
     next(err);
@@ -98,7 +111,7 @@ export const OnLike = async (req, res, next) => {
   try {
     const check = await LikeRepository.findLike(
       req.user.id,
-      parseInt(req.body.postId, 10)
+      parseInt(req.params.postId, 10)
     );
     if (check) {
       return res
@@ -107,14 +120,14 @@ export const OnLike = async (req, res, next) => {
     }
     const response = await LikeRepository.Like(
       req.user.id,
-      parseInt(req.body.postId, 10)
+      parseInt(req.params.postId, 10)
     );
     if (!response) {
       return res
         .status(500)
         .send(resFormat.fail(500, "알수 없는 에러로 좋아요 실패"));
     }
-    return res.status(200).send(resFormat.success(200, "좋아요 성공"));
+    return res.status(200).redirect("/post/" + req.params.postId);
   } catch (err) {
     console.error(err);
     next(err);
@@ -152,7 +165,7 @@ export const OnScrap = async (req, res, next) => {
   try {
     const check = await ScrapRepository.findScrap(
       req.user.id,
-      parseInt(req.body.postId, 10)
+      parseInt(req.params.postId, 10)
     );
     if (check) {
       return res
@@ -161,14 +174,14 @@ export const OnScrap = async (req, res, next) => {
     }
     const response = await ScrapRepository.OnScrap(
       req.user.id,
-      parseInt(req.body.postId, 10)
+      parseInt(req.params.postId, 10)
     );
     if (!response) {
       return res
         .status(500)
         .send(resFormat.fail(500, "알수 없는 에러로 스크랩 실패"));
     }
-    return res.status(200).send(resFormat.success(200, "스크랩 성공"));
+    return res.status(200).redirect("/post/" + req.params.postId);
   } catch (err) {
     console.error(err);
     next(err);
@@ -202,9 +215,25 @@ export const OnUnScrap = async (req, res, next) => {
   }
 };
 
+export const GetPostList = async (req, res, next) => {
+  try {
+    const keyword = req.query.keyword ? req.query.keyword : undefined;
+    const category = req.query.category ? req.query.category : undefined;
+    const data = await PostRepository.GetPostList(keyword, category);
+    if (!data) {
+      return res
+        .status(500)
+        .send(resFormat.fail(500, "알수 없는 에러로 가져오기 실패"));
+    }
+    return res.status(200).render("home/community", data);
+  } catch (err) {
+    console.error(err);
+    next(err);
+  }
+};
 export const CreateOption = (id, bodydata) => {
   // DB에 맞추어 Option 설정
-  const Option = {
+  let Option = {
     author: {
       connect: {
         id,
@@ -213,10 +242,16 @@ export const CreateOption = (id, bodydata) => {
     title: bodydata.title,
     category: bodydata.category,
     content: bodydata.content,
-    tag: bodydata.tag.join(","),
     reservation: bodydata.reservation,
     createdAt: dbNow(),
   };
+  if (bodydata.tag) {
+    if (Array.isArray(bodydata.tag)) {
+      Option.tag = bodydata.tag.join(",");
+    } else {
+      Option.tag = bodydata.tag;
+    }
+  }
   return Option;
 };
 
@@ -235,7 +270,11 @@ const UpdateOption = (bodydata) => {
     Option.category = bodydata.category;
   }
   if (bodydata.tag) {
-    Option.tag = bodydata.tag.join(",");
+    if (Array.isArray(bodydata.tag)) {
+      Option.tag = bodydata.tag.join(",");
+    } else {
+      Option.tag = bodydata.tag;
+    }
   }
   return Option;
 };
